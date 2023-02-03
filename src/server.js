@@ -1,17 +1,18 @@
 require('express-async-errors')
-const  database = require("./database/sqlite") //importando o database
 
-// utilizando o método post
+const migrationsRun = require('./database/sqlite/migrations') //importando a migrations
 const AppError = require('./utils/AppError')
 const routes = require('./routes') //vai carregar, por padrão, o index.js para mim
 const express = require('express')
 
 const app = express()
+
+migrationsRun()
+
+
+//prestar atenção porque aqui a ordem importa!!
 app.use(express.json()) // avisando que vamos utilizar o formato json para receber informações do body
-
 app.use(routes) //o meu servidor vai utiliar as rotas (que está no arquivo index)
-
-database(); 
 
 app.use((error, request, response, next) => {
   if (error instanceof AppError) {

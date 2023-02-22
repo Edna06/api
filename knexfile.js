@@ -7,12 +7,22 @@ module.exports = {
       filename: path.resolve(__dirname, 'src', 'database', 'database.db')
     },
     // para automatizar a criação de tabelas dentro da minha aplicação
-    // em que lugar vasi ter que armazenar essas informações
-    migrations: { //o diretório deve conter o mesmo nome da pasta local da migration
-      directory: path.resolve(__dirname, 'src', 'database', 'knex', 'migrations')
+
+    //para que eu consiga utilizar a opção de apagar por CASCADE
+    //recuperando minha conexão e a função de callback
+    pool: {
+      afterCreate: (conn, cb ) => conn.run("PRAGMA foreign_keys = ON", cb)
+    },
+
+    migrations: {
+      directory: path.resolve(
+        __dirname,
+        'src',
+        'database',
+        'knex',
+        'migrations'
+      )
     },
     useNullAsDefault: true
   }
 }
-
-

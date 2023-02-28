@@ -7,10 +7,10 @@ const notesRoutes = Router()
 
 const notesController = new NotesController()
 
-notesRoutes.post('/:user_id', notesController.create)
 //acrescentando a rota(para deixá-la visível)
+notesRoutes.get('/', notesController.index) 
+notesRoutes.post('/:user_id', notesController.create)
 notesRoutes.get('/:id', notesController.show)
-
 notesRoutes.delete('/:id', notesController.delete)
 
 module.exports = notesRoutes

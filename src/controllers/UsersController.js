@@ -50,7 +50,6 @@ class UsersController {
       throw new AppError('Este e-mail já está em uso.')
     }
 
-  
     user.name = name ?? user.name
     user.email = email ?? user.email
 

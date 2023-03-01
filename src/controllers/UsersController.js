@@ -3,7 +3,7 @@ const AppError = require('../utils/AppError')
 const sqliteConnection = require('../database/sqlite') //conexão com o banco de dados
 
 class UsersController {
-  async create(request, response) {
+  async   create(request, response) {
     const { name, email, password } = request.body
 
     const database = await sqliteConnection() //fazendo uma conexão com o banco de dados

@@ -42,7 +42,7 @@ class notesController {
 
     const links = await knex('links')
       .where({ note_id: id })
-      .orderBy('updated_at')
+      .orderBy('created_at')
 
     return response.json({
       ...note,

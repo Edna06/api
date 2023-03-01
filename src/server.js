@@ -9,7 +9,6 @@ const app = express()
 
 migrationsRun()
 
-
 //prestar atenção porque aqui a ordem importa!!
 app.use(express.json()) // avisando que vamos utilizar o formato json para receber informações do body
 app.use(routes) //o meu servidor vai utiliar as rotas (que está no arquivo index)

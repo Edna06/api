@@ -25,7 +25,9 @@ class SessionController {
     if (!passwordMatched) {
       throw new AppError('E-mail e/ou senha incorreta', 401)
     }
-    //se passou pelas duas etapas, o usuário tem as credenciais de acesso. Agora, vou entregar um token(chave, para que ele consiga e utilize para fazer as requisições depois) de acesso para ele:
+    
+
+    //entregando a chave de acesso para o usuário
 
     const { secret, expiresIn } = authConfig.jwt
     const token = sign({}, secret, {

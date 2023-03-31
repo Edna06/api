@@ -4,12 +4,17 @@ const migrationsRun = require('./database/sqlite/migrations') //importando a mig
 const AppError = require('./utils/AppError')
 const uploadConfig = require('./configs/upload')
 
+const cors = require('cors')
+
 const routes = require('./routes') //vai carregar, por padrão, o index.js para mim
 const express = require('express')
 
+migrationsRun()
+
+
 const app = express()
 
-migrationsRun()
+app.use=(cors())
 
 //prestar atenção porque aqui a ordem importa!!
 app.use(express.json()) // avisando que vamos utilizar o formato json para receber informações do body

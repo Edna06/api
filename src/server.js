@@ -14,7 +14,7 @@ migrationsRun()
 
 const app = express()
 
-app.use=(cors())
+app.use(cors())
 
 //prestar atenção porque aqui a ordem importa!!
 app.use(express.json()) // avisando que vamos utilizar o formato json para receber informações do body

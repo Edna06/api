@@ -6,7 +6,7 @@ class notesController {
     const { title, description, tags, links } = request.body
     const  user_id = request.user.id
 
-    const {note_id} = await knex('notes').insert({ 
+    const [note_id] = await knex('notes').insert({
       title,
       description,
       user_id
@@ -71,11 +71,16 @@ class notesController {
       const filterTags = tags.split(',').map(tag => tag.trim())
 
       notes = await knex('tags')
-        .select(['notes.id', 'notes.title', 'notes.user_id'])
+        .select([
+        'notes.id',
+        'notes.title',
+        'notes.user_id'
+      ])
         .where('notes.user_id', user_id)
-        .whereLike('notes.title', `%${title}%`)
-        .whereIn('name', filterTags)
+        .whereLike('title', `%${title}%`)
+        .whereIn('tags.name', filterTags)
         .innerJoin('notes', 'notes.id', 'tags.note_id')
+        .groupBy('notes.id')//para não me retornar notas duplicadas
         .orderBy('notes.title')
     } else {
       notes = await knex('notes')

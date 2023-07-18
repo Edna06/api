@@ -7,7 +7,6 @@ class UsersController {
     const { name, email, password } = request.body
 
     const database = await sqliteConnection() //fazendo uma conexão com o banco de dados
-
     const checkUserExist = await database.get(
       //consultando os dados da minha tabela
       'SELECT * FROM users WHERE email = (?)',
@@ -32,7 +31,7 @@ class UsersController {
   async update(request, response) {
     const { name, email, password, old_password } = request.body
     const user_id = request.user.id; //consigo fazer isso pelo middle que eu passei na rota
-  
+
 
     const database = await sqliteConnection()
     const user = await database.get('SELECT * FROM users WHERE id = (?)', [user_id])
@@ -72,8 +71,8 @@ class UsersController {
     await database.run(
       `
     UPDATE users SET
-    name = ?, 
-    email = ?, 
+    name = ?,
+    email = ?,
     password = ?,
     updated_at = DATETIME('now')
     WHERE id = ?`,

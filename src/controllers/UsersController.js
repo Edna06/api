@@ -1,26 +1,19 @@
 const { hash, compare } = require('bcryptjs'); //tive que importar o compare para conseguir fazer a comparações entre as senhas que estão criptografadas
 const AppError = require('../utils/AppError');
 
-const UserRepository = require('../repositories/UserRepository');
 const sqliteConnection = require('../database/sqlite'); //conexão com o banco de dados
+const UserRepository = require('../repositories/UserRepository');
+const UserCreateService = require('../services/UserCreateService')
 
 class UsersController {
   async create(request, response) {
     const { name, email, password } = request.body;
 
-    //instanciando o meu UserRepository
     const userRepository = new UserRepository();
 
-    const checkUserExist =  await userRepository.findByEmail(email)
+    const userCreateService = new UserCreateService(userRepository);
 
-    if (checkUserExist) {
-      throw new AppError('Este e-mail já está em uso!')
-    }
-
-    const hashedPassword = await hash(password, 8)
-
-    // INSERINDO DADOS DO USUÁRIO
-    await userRepository.create({name, email, password: hashedPassword});
+    await userCreateService.execute({ name, email, password});
 
     return response.status(201).json()
   }
